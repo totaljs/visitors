@@ -86,7 +86,7 @@
 
 	ajax(params);
 	W.$visitorsinterval = setInterval(function() {
-		ajax('?id=' + ticks + (un ? ('&utm_user=' + encodeURIComponent(un)) : ''), true);
+		document.hasFocus() && ajax('?id=' + ticks + (un ? ('&utm_user=' + encodeURIComponent(un)) : ''), true);
 	}, 30000);
 
 })();
