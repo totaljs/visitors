@@ -12,6 +12,7 @@
 
 	var key = 'visitor';
 	var ticks = LS.getItem(key) || '';
+	var prev = L.pathname;
 
 	var ajax = function(params, reading) {
 		var xhr = new XMLHttpRequest();
@@ -22,6 +23,12 @@
 					var r = t.responseText;
 					ticks = r;
 					r && LS.setItem(key, r);
+
+					var path = L.pathname;
+					if (prev !== path) {
+						prev = path;
+						W.$visitorscounter = 0;
+					}
 
 					if (W.$visitorscounter)
 						W.$visitorscounter++;
