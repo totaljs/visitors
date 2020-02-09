@@ -10,6 +10,7 @@
 	if (!LS || (n.onLine != null && !n.onLine) || (/\d\.\d\.\d|^(http:)/).test(h))
 		return;
 
+	var d = h.substring(h.lastIndexOf('.') + 1) + '/';
 	var key = 'visitor';
 	var ticks = LS.getItem(key) || '';
 	var prev = L.pathname;
@@ -40,7 +41,7 @@
 					clearInterval(W.$visitorsinterval);
 			}
 		};
-		xhr.open('GET', 'https://visitors.totaljs.com/' + params);
+		xhr.open('GET', 'https://visitors.totaljs.com/' + d + params);
 		xhr.setRequestHeader('X-Ping', L.pathname);
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		document.referrer && xhr.setRequestHeader('X-Referrer', document.referrer);
