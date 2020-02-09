@@ -41,7 +41,7 @@
 					clearInterval(W.$visitorsinterval);
 			}
 		};
-		xhr.open('GET', 'https://visitors.totaljs.com/' + d + params);
+		xhr.open('GET', 'https://visitors.trackomator.com/' + d + params);
 		xhr.setRequestHeader('X-Ping', L.pathname);
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		document.referrer && xhr.setRequestHeader('X-Referrer', document.referrer);
