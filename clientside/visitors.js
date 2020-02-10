@@ -13,7 +13,13 @@
 	var d = h.substring(h.lastIndexOf('.') + 1) + '/';
 	var key = 'visitor';
 	var ticks = LS.getItem(key) || '';
-	var prev = L.pathname;
+	var query = {};
+
+	var pathname = function() {
+		return W.pathname || L.pathname;
+	};
+
+	var prev = pathname();
 
 	var ajax = function(params, reading) {
 		var xhr = new XMLHttpRequest();
@@ -25,7 +31,7 @@
 					ticks = r;
 					r && LS.setItem(key, r);
 
-					var path = L.pathname;
+					var path = pathname();
 					if (prev !== path) {
 						prev = path;
 						W.$visitorscounter = 0;
@@ -42,7 +48,7 @@
 			}
 		};
 		xhr.open('GET', 'https://visitors.trackomator.com/' + d + params);
-		xhr.setRequestHeader('X-Ping', L.pathname);
+		xhr.setRequestHeader('X-Ping', prev);
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		document.referrer && xhr.setRequestHeader('X-Referrer', document.referrer);
 		reading && xhr.setRequestHeader('X-Reading', '1');
@@ -63,7 +69,6 @@
 	}
 
 	var params = '?id=' + ticks;
-	var query = {};
 	var un;
 
 	var arr = L.href.slice(L.href.indexOf('?') + 1).split('&');
@@ -93,6 +98,7 @@
 		params += '&utm_user=' + encodeURIComponent(un);
 
 	ajax(params);
+
 	W.$visitorsinterval = setInterval(function() {
 		document.hasFocus() && ajax('?id=' + ticks + (un ? ('&utm_user=' + encodeURIComponent(un)) : ''), true);
 	}, 30000);
